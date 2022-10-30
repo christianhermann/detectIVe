@@ -1,12 +1,12 @@
 What can the detectIVe help you with?
 
-Fast and easy import of HEKA Patchmaster .asc data.
-Cleanup of imported .asc data.
-Calculation of various measurement parameters such as the current density.
-Easy way to save and store data for later use as a single .rdata file.
-Create a large set of different beautifull plots, such as current density boxplots or current density - voltage relation plots using ggplot2 and an easy to use GUI.
-Calculate and display key parameters and statistics for those plots.
-Save plots as bitmaps, vector graphics or even .rdata for later use.
+- Fast and easy import of HEKA Patchmaster .asc data.
+- Cleanup of imported .asc data.
+- Calculation of various measurement parameters such as the current density.
+- Easy way to save and store data for later use as a single .rdata file.
+- Create a large set of different beautifull plots, such as current density boxplots or current density - voltage relation plots using ggplot2 and an easy to use GUI.
+- Calculate and display key parameters and statistics for those plots.
+- Save plots as bitmaps, vector graphics or even .rdata for later use.
 
 
 How to setup the detecIVe?
