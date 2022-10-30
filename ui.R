@@ -1992,7 +1992,7 @@ body <- dashboardBody(
             numericInput("revPotential_split", "Reverse potential (mV)", value = 0),
             switchInput(
               "inputSplit",
-              value = FALSE,
+              value = TRUE,
               onLabel = "ON",
               offLabel = "OFF"
             )
