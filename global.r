@@ -37,7 +37,7 @@ if(!require(scales)) install.packages("scales")
 if(!require(gtools)) install.packages("gtools")
 
 ####Newest release####
-VersionEphysWSI = '2.1.3'
+VersionEphysWSI = '2.1.4'
 ####Newest release####
 path <- rstudioapi::getSourceEditorContext()$path
 path <- paste(strsplit(path,"/")[[1]][-length(strsplit(path,"/")[[1]])], collapse = "/")

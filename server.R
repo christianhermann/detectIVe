@@ -918,7 +918,7 @@ shinyServer(function(input, output, session) {
               )
               return()
             }
-            fp <- paste0(fp, ",rdata")
+            fp <- paste0(fp, ".rdata")
 
             save(data_storage_envir,
               data_envir,
