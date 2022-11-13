@@ -2234,7 +2234,7 @@ body <- dashboardBody(
 ##### Header#####
 header <- dashboardHeader(title = span(
   "DetectIVe",
-  tags$img(src="detectIVe.png", width = '20%')),
+  tags$img(src="detectIVe2.png", width = '20%')),
                           titleWidth  = 200)
 #####
 
