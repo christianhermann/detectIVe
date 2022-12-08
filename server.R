@@ -312,6 +312,9 @@ shinyServer(function(input, output, session) {
   observeEvent(input$Boxplot_colors, {
     colorSelected$Boxplot <<- input$Boxplot_colors
   })
+
+
+
   observe({
     col <- input$Boxplot_colorPicker
     colorChoices$Boxplot <<- c(colorChoices$Boxplot, col)
@@ -320,7 +323,13 @@ shinyServer(function(input, output, session) {
       choices = colorChoices$Boxplot,
       selected = colorSelected$Boxplot
     )
+    isolate(updateTextInput(session, inputId = "Boxplot_colorsText",
+                            label = NULL,
+                            value  = c(input$Boxplot_colorsText,col)))
   })
+
+
+
   ####
   #### Ratioplots
   observeEvent(input$Ratioplot_colors, {
@@ -334,6 +343,9 @@ shinyServer(function(input, output, session) {
       choices = colorChoices$Ratioplot,
       selected = colorSelected$Ratioplot
     )
+    isolate(updateTextInput(session, inputId = "Ratioplot_colorsText",
+                            label = NULL,
+                            value  = c(input$Ratioplot_colorsText,col)))
   })
   ####
   #### SingleTraces
@@ -348,6 +360,9 @@ shinyServer(function(input, output, session) {
       choices = colorChoices$SingleTraces,
       selected = colorSelected$SingleTraces
     )
+    isolate(updateTextInput(session, inputId = "SingleTraces_colorsText",
+                            label = NULL,
+                            value  = c(input$SingleTraces_colorsText,col)))
   })
   ####
   #### MatTraces
@@ -362,6 +377,9 @@ shinyServer(function(input, output, session) {
       choices = colorChoices$MatTraces,
       selected = colorSelected$MatTraces
     )
+    isolate(updateTextInput(session, inputId = "MatTraces_colorsText",
+                            label = NULL,
+                            value  = c(input$MatTraces_colorsText,col)))
   })
   ####
   #### MedianTraces
@@ -376,6 +394,9 @@ shinyServer(function(input, output, session) {
       choices = colorChoices$MedianTraces,
       selected = colorSelected$MedianTraces
     )
+    isolate(updateTextInput(session, inputId = "MedianTraces_colorsText",
+                            label = NULL,
+                            value  = c(input$MedianTraces_colorsText,col)))
   })
   ####
   #### PPlot
@@ -390,6 +411,9 @@ shinyServer(function(input, output, session) {
       choices = colorChoices$PPlot,
       selected = colorSelected$PPlot
     )
+    isolate(updateTextInput(session, inputId = "PPlot_colorsText",
+                            label = NULL,
+                            value  = c(input$PPlot_colorsText,col)))
   })
   ####
   #### StitchedPlot
@@ -404,6 +428,9 @@ shinyServer(function(input, output, session) {
       choices = colorChoices$StitchedPlot,
       selected = colorSelected$StitchedPlot
     )
+    isolate(updateTextInput(session, inputId = "StitchedPlot_colorsText",
+                            label = NULL,
+                            value  = c(input$StitchedPlot_colorsText,col)))
   })
 
   #####
@@ -674,19 +701,19 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$SingleTraces_Save_plot, {
     if (input$legend_seperate_SingleTraces == TRUE) {
-      savePlots(plot_list$SingleTraces, "SingleTraces_")
-      savePlots(legend_list$SingleTraces, "SingleTraces_")
-    } else {
       savePlots(plot_list_woLegend$SingleTraces, "SingleTraces_")
+      savePlots(legend_list$SingleTraces, "SingleTraces_","_Legend")
+    } else {
+      savePlots(plot_list$SingleTraces, "SingleTraces_")
     }
   })
 
   observeEvent(input$SingleTraces_Modal_save_Plot, {
     if (input$legend_seperate_SingleTraces == TRUE) {
-      quickSavePlot(plot_list$SingleTraces, "SingleTraces_")
-      quickSavePlot(legend_list$SingleTraces, "SingleTraces_")
-    } else {
       quickSavePlot(plot_list_woLegend$SingleTraces, "SingleTraces_")
+      quickSavePlot(legend_list$SingleTraces, "SingleTraces_","_Legend")
+    } else {
+      quickSavePlot(plot_list$SingleTraces, "SingleTraces_")
     }
   })
 
@@ -696,19 +723,19 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$MatTraces_Save_plot, {
     if (input$legend_seperate_MatTraces == TRUE) {
-      savePlots(plot_list$MatTraces, "MatTraces_")
-      savePlots(legend_list$MatTraces, "MatTraces_")
-    } else {
       savePlots(plot_list_woLegend$MatTraces, "MatTraces_")
+      savePlots(legend_list$MatTraces, "MatTraces_","_Legend")
+    } else {
+      savePlots(plot_list$MatTraces, "MatTraces_")
     }
   })
 
   observeEvent(input$MatTraces_Modal_save_Plot, {
     if (input$legend_seperate_MatTraces == TRUE) {
-      quickSavePlot(plot_list$MatTraces, "MatTraces_")
-      quickSavePlot(legend_list$MatTraces, "MatTraces_")
-    } else {
       quickSavePlot(plot_list_woLegend$MatTraces, "MatTraces_")
+      quickSavePlot(legend_list$MatTraces, "MatTraces_", "_Legend")
+    } else {
+      quickSavePlot(plot_list$MatTraces, "MatTraces_")
     }
   })
 
@@ -718,19 +745,19 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$MedianTraces_Save_plot, {
     if (input$legend_seperate_MedianTraces == TRUE) {
-      savePlots(plot_list$MedianTraces, "MedianTraces_")
-      savePlots(legend_list$MedianTraces, "MedianTraces_")
-    } else {
       savePlots(plot_list_woLegend$MedianTraces, "MedianTraces_")
+      savePlots(legend_list$MedianTraces, "MedianTraces_", "_Legend")
+    } else {
+      savePlots(plot_list$MedianTraces, "MedianTraces_")
     }
   })
 
   observeEvent(input$MedianTraces_Modal_save_Plot, {
     if (input$legend_seperate_MedianTraces == TRUE) {
-      quickSavePlot(plot_list$MedianTraces, "MedianTraces_")
-      quickSavePlot(legend_list$MedianTraces, "MedianTraces_")
-    } else {
       quickSavePlot(plot_list_woLegend$MedianTraces, "MedianTraces_")
+      quickSavePlot(legend_list$MedianTraces, "MedianTraces_", "_Legend")
+    } else {
+      quickSavePlot(plot_list$MedianTraces, "MedianTraces_")
     }
   })
 
@@ -740,19 +767,19 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$PPlot_Save_plot, {
     if (input$legend_seperate_PPlot == TRUE) {
-      savePlots(plot_list$PPlot, "PPlot_")
-      savePlots(legend_list$PPlot, "PPlot_")
-    } else {
       savePlots(plot_list_woLegend$PPlot, "PPlot_")
+      savePlots(legend_list$PPlot, "PPlot_","_Legend")
+    } else {
+      savePlots(plot_list$PPlot, "PPlot_")
     }
   })
 
   observeEvent(input$PPlot_Modal_save_Plot, {
     if (input$legend_seperate_PPlot == TRUE) {
-      quickSavePlot(plot_list$PPlot, "PPlot_")
-      quickSavePlot(legend_list$PPlot, "PPlot_")
-    } else {
       quickSavePlot(plot_list_woLegend$PPlot, "PPlot_")
+      quickSavePlot(legend_list$PPlot, "PPlot_","_Legend")
+    } else {
+      quickSavePlot(plot_list$PPlot, "PPlot_")
     }
   })
 
@@ -762,19 +789,19 @@ shinyServer(function(input, output, session) {
 
   observeEvent(input$StitchedPlot_Save_plot, {
     if (input$legend_seperate_StitchedPlot == TRUE) {
-      savePlots(plot_list$StitchedPlot, "StitchedPlot_")
-      savePlots(legend_list$StitchedPlot, "StitchedPlot_")
-    } else {
       savePlots(plot_list_woLegend$StitchedPlot, "StitchedPlot_")
+      savePlots(legend_list$StitchedPlot, "StitchedPlot_", "_Legend")
+    } else {
+      savePlots(plot_list$StitchedPlot, "StitchedPlot_")
     }
   })
 
   observeEvent(input$StitchedPlot_Modal_save_Plot, {
     if (input$legend_seperate_StitchedPlot == TRUE) {
-      quickSavePlot(plot_list$StitchedPlot, "StitchedPlot_")
-      quickSavePlot(legend_list$StitchedPlot, "StitchedPlot_")
-    } else {
       quickSavePlot(plot_list_woLegend$StitchedPlot, "StitchedPlot_")
+      quickSavePlot(legend_list$StitchedPlot, "StitchedPlot_", "_Legend")
+    } else {
+      quickSavePlot(plot_list$StitchedPlot, "StitchedPlot_")
     }
   })
 
@@ -950,10 +977,10 @@ shinyServer(function(input, output, session) {
     )
   }
 
-  quickSavePlot <- function(curPlot, plotType) {
+  quickSavePlot <- function(curPlot, plotType, name_suffix = "") {
     rand <- sample(1:21, 2)
     name <-
-      paste0(nameGenListAdj[rand[1]], nameGenListNouns[rand[2]], "_", plotType, ".png")
+      paste0(nameGenListAdj[rand[1]], nameGenListNouns[rand[2]], "_", plotType, name_suffix,".png")
 
     ggsave(
       paste0(name),
@@ -1041,6 +1068,24 @@ shinyServer(function(input, output, session) {
 
         if (!is.null(input[[paste0("Significance_", plotType)]])) {
           statTests <- selectTestForPlot(input[[paste0("Significance_", plotType)]])
+        }
+
+        if (input[[paste0(plotType,"_switchColors")]] == TRUE) {
+          if(any(str_detect(str_split(input[[paste0(plotType, "_colorsText")]], ",", simplify= T), "(#\\w{6})")) == FALSE) {
+            showModal(
+              modalDialog(
+                title = "Error!",
+                "Colors are not submitted correctly!",
+                easyClose = TRUE
+              )
+            )
+            return()
+          }
+          used_colors <- str_split(input[[paste0(plotType, "_colorsText")]], ",", simplify= T)
+        } else
+        {
+          used_colors = input[[paste0(plotType, "_colors")]]
+
         }
 
 
@@ -1134,7 +1179,7 @@ shinyServer(function(input, output, session) {
             distance_p_value_stars = input$distance_p_value_stars_CD,
             kruskal = statTests[4],
             compIntern = statTests[3],
-            used_colors = input$Boxplot_colors
+            used_colors = used_colors
           )
           plot_list[[plotType]] <<- currentPlot[[1]]
         }
@@ -1228,7 +1273,7 @@ shinyServer(function(input, output, session) {
             distance_p_value_stars = input$distance_p_value_stars_Ratioplot,
             kruskal = statTests[4],
             compIntern = statTests[3],
-            used_colors = input$Ratioplot_colors,
+            used_colors = used_colors
           )
           plot_list[[plotType]] <<- currentPlot[[1]]
         }
@@ -1262,7 +1307,7 @@ shinyServer(function(input, output, session) {
               input$SingleTraces_YlimMax
             ),
             display_N_legend = FALSE,
-            used_colors = input$SingleTraces_colors
+            used_colors = used_colors
           )
           plot_list[[plotType]] <<- currentPlot[[1]]
           plot_list_woLegend[[plotType]] <<- currentPlot[[2]]
@@ -1308,7 +1353,7 @@ shinyServer(function(input, output, session) {
             splitted = input$split_plot_MatTraces,
             display_N_legend = TRUE,
             overrideYlim = c(input$MatTraces_YlimMin, input$MatTraces_YlimMax),
-            used_colors = input$MatTraces_colors,
+            used_colors = used_colors
           )
           plot_list[[plotType]] <<- currentPlot[[1]]
           plot_list_woLegend[[plotType]] <<- currentPlot[[2]]
@@ -1352,7 +1397,7 @@ shinyServer(function(input, output, session) {
             measurement_name = input$Names_MedianTraces,
             splitted = input$split_plot_MedianTraces,
             overrideYlim = c(input$MedianTraces_YlimMin, input$MedianTraces_YlimMax),
-            used_colors = input$MedianTraces_colors,
+            used_colors = used_colors,
             display_N_legend = TRUE,
             SD_MAD = input$Deviations_MedianTraces,
             SD_MAD_shadow_direction = unlist(strsplit(input$SD_MAD_Shadow_MedianTraces, ","))
@@ -1400,7 +1445,7 @@ shinyServer(function(input, output, session) {
             measurement_name = input$Names_PPlot,
             splitted = input$split_plot_PPlot,
             overrideYlim = c(input$PPlot_YlimMin, input$PPlot_YlimMax),
-            used_colors = input$PPlot_colors,
+            used_colors = used_colors,
             SD_MAD = input$Deviations_PPlot,
             SD_MAD_shadow_direction = unlist(strsplit(input$SD_MAD_Shadow_PPlot, ",")),
             ratio_Median_P_plot = input$PlotRatio_PPlot,
@@ -1460,7 +1505,7 @@ shinyServer(function(input, output, session) {
               c(input$StitchedPlot_YlimMin4, input$StitchedPlot_YlimMax4),
               c(input$StitchedPlot_YlimMin5, input$StitchedPlot_YlimMax5)
             ),
-            used_colors = input$StitchedPlot_colors,
+            used_colors = used_colors,
             SD_MAD = input$Deviations_StitchedPlot,
             SD_MAD_shadow_direction = unlist(strsplit(input$SD_MAD_Shadow_StitchedPlot, ",")),
             ratio_Median_P_plot = input$PlotRatio_StitchedPlot,
@@ -1686,9 +1731,9 @@ shinyServer(function(input, output, session) {
     )
   }
 
-  savePlots <- function(curPlot, curPlotType) {
+  savePlots <- function(curPlot, curPlotType, name_suffix = "") {
     ggsave(
-      paste0(input[[paste0(curPlotType, "saveName")]], ".", input[[paste0(curPlotType, "Filetype")]]),
+      paste0(input[[paste0(curPlotType, "saveName")]], name_suffix ,".", input[[paste0(curPlotType, "Filetype")]]),
       curPlot,
       device = ggplotSavedevice(input[[paste0(curPlotType, "Filetype")]]),
       width = input[[paste0(curPlotType, "Save_width")]],

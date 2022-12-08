@@ -125,6 +125,7 @@ colorBoxFactory <- function(name) {
               selected = colorSelected,
               multiple = T,
               options = list(create = TRUE)
+
             )
           ),
           column(
@@ -153,6 +154,14 @@ colorBoxFactory <- function(name) {
                 "Yellow Orange" = brewer_pal(palette = "YlOrBr")(9)
               )
             )
+          )
+        ),
+        fluidRow(
+          column(11,
+          textInput(inputId = paste0(name, "colorsText"), NULL, value = paste0(colorSelected$Boxplot, collapse = ","))),
+          column(1,
+          prettySwitch(inputId = paste0(name, "switchColors"), NULL, status= "primary"),
+
           )
         )),
         ...
