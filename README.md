@@ -1,4 +1,4 @@
-What can the detectIVe help you with?
+How can the detectIVe help you with?
 
 - Fast and easy import of HEKA Patchmaster .asc data.
 - Cleanup of imported .asc data.
@@ -12,9 +12,6 @@ What can the detectIVe help you with?
 How to setup the detecIVe?
 1. Make sure Microsoft R Open 4.02 is installed and selected as active R version. (Tools/Global Options/ R Version)
 2. Download the files in the repository
-3. Open the global.r file
-4. In the Packages tab, check if the file version of the checkpoint package is "1.0.2" or higher if not install the latest checkpoint packages using the install function
-5. Highlight the code (strg+a / control+a) and press (strg+enter / control+enter) to run the code once.
-6. If asked if you want to restart RStudio press "No". 
-7. Once all packages are installed start the application by clicking on the "Run App" Button on the top right.
-8. Click on Settings then Packages and then on install Packages. If asked if you want to restart R Studio press no.
+3. Open the prepareDetectIVe.r file and run it to install checkpoint, vctr and shiny, create a checkpoint and then install all other needed packages. If asked if you want to restart RStudio press "No". 
+4  Once all packages are installed start the application by clicking on the "Run App" Button on the top right.
+5. Click on Settings then Packages and then checl the installed Packages. If one is If asked if you want to restart R Studio press no.
