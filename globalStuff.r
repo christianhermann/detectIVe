@@ -1,69 +1,34 @@
 rm(list = ls())
-options(repos = c(CRAN = "https://mran.revolutionanalytics.com/snapshot/2022-04-07"),
-        shiny.launch.browser = .rs.invokeShinyWindowExternal,
+options(
         rlib_downstream_check = FALSE,
         lib="glyphicon")
 
 if("ephys.WSI" %in%  .packages()) detach("package:ephys.WSI", unload = TRUE)
 
-library(checkpoint)
-####Packages on NAS (Slow!)####
-#checkpoint("2022-04-07", scanForPackages = F,
-#           checkpoint_location = "U:/Installationsprogramme/R/detecIVe2")
-
-####Packages on local drive (fast)####
-checkpoint("2022-04-07", scanForPackages = F,
-           checkpoint_location = "C:/R_Checkpoint")
 
 
+####Load the most needed packages to run####
+
+library(plotly)
+library(shinyBS)
+library(shinyalert)
+library(shinybusy)
+library(shinycustomloader)
+library(shinyWidgets)
+library(shinydashboard)
+library(shinydashboardPlus)
+library(shinyjs)
+library(shiny)
+library(rstudioapi)
+library(tryCatchLog)
+library(esquisse)
+library(scales)
+library(gtools)
+library(ephys.WSI)
 
 
-####Install the most needed packages to run####
-
-if(!require(plotly)) install.packages("plotly")
-if(!require(shinyBS)) install.packages("shinyBS")
-if(!require(shinyalert)) install.packages("shinyalert")
-if(!require(shinybusy)) install.packages("shinybusy")
-if(!require(shinycustomloader)) install.packages("shinycustomloader")
-if(!require(shinyWidgets)) install.packages("shinyWidgets")
-if(!require(shinydashboard)) install.packages("shinydashboard")
-if(!require(shinydashboardPlus)) install.packages("shinydashboardPlus")
-if(!require(shinyjs)) install.packages("shinyjs")
-if(!require(shiny)) install.packages("shiny")
-if(!require(rstudioapi)) install.packages("rstudioapi")
-if(!require(tryCatchLog)) install.packages("tryCatchLog")
-if(!require(esquisse)) install.packages("esquisse")
-if(!require(scales)) install.packages("scales")
-if(!require(gtools)) install.packages("gtools")
-
-####Newest release####
-VersionEphysWSI = '2.1.8'
-####Newest release####
-path <- rstudioapi::getSourceEditorContext()$path
-path <- paste(strsplit(path,"/")[[1]][-length(strsplit(path,"/")[[1]])], collapse = "/")
-
-if(!require(ephys.WSI)) install.packages(
-  paste0(path,"/","ephys.WSI_",VersionEphysWSI,".zip"),
-  repos = NULL,
-  type = "win.binary"
-)
-
-####Install the most needed packages to run####
 
 
-####Autoupdate Package####
-if (packageVersion("ephys.WSI") != VersionEphysWSI){
-  if("ephys.WSI" %in% (.packages()))
-    detach("package:ephys.WSI", unload = TRUE)
-  remove.packages("ephys.WSI", lib = "~/R/win-library/3.6")
-  install.packages(
-    paste0(path,"/","ephys.WSI_",VersionEphysWSI,".zip"),
-    repos = NULL,
-    type = "win.binary"
-  )
-}
-
-####Autoupdate Package####
 ###Envirs###
 data_storage_envir <- data_storage_envir
 data_envir <- data_envir

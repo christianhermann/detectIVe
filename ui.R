@@ -1,3 +1,7 @@
+source("globalStuff.r")
+
+library(shinydashboardPlus)
+
 #### Factories and GUI Elements####
 solidHeaderBoxFactory <-
   function(color, ...) {

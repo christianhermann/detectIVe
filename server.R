@@ -1,3 +1,4 @@
+
 shinyServer(function(input, output, session) {
   #####
   ##### Reactives#####
@@ -2109,4 +2110,11 @@ shinyServer(function(input, output, session) {
     updateBoxSidebar("ylimSidebar_StitchedPlot")
   })
   #####
+
+  if (!interactive()) {
+    session$onSessionEnded(function() {
+      stopApp()
+      q("no")
+    })
+  }
 })
