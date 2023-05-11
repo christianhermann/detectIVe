@@ -1052,9 +1052,9 @@ shinyServer(function(input, output, session) {
           type = "error"
         )
       },
-      write.error.dump.file = TRUE,
+#      write.error.dump.file = TRUE,
       include.compact.call.stack = TRUE,
-      write.error.dump.folder = file.path(path, "Error Dumps"),
+#      write.error.dump.folder = file.path(path, "Error Dumps"),
       include.full.call.stack = FALSE
     )
   }
