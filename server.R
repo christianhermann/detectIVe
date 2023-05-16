@@ -37,7 +37,9 @@ shinyServer(function(input, output, session) {
   })
   ##### Change Workspace######
   observeEvent(input$ChangeWorkspace, {
-    try(setwd(choose.dir()))
+    wddir <- choose.dir()
+    if(!is.na(wddir)) setwd(wddir)
+
     output$Workspace <- renderText({
       getwd()
     })
