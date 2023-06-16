@@ -52,6 +52,7 @@ library(svglite)
 library(Cairo)
 library(gridExtra)
 library(ggpubr)
+library(ephys.WSI)
 
 options("guiToolkit"="tcltk")
 guiToolkit("tcltk")
@@ -95,7 +96,7 @@ supportPackages <- c(
 #####Global Variables#####
 isDataImported <- FALSE
 colorPalette <- c("#000000", "#0072B2", "#009E73",
-                  "#D55E00", "#56B4E9", #F0E442",
+                  "#D55E00", "#56B4E9", "#F0E442",
                   "#CC79A7", "#999999", "#E69F00")
 colorChoices <- list(Boxplot = colorPalette,
                      Ratioplot = colorPalette,
