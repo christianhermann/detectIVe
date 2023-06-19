@@ -51,7 +51,8 @@ create_app(
     "Cairo",
     "gridExtra",
     "gWidgets2tcltk",
-    "ggpubr"
+    "ggpubr",
+    "ephys.WSI"
   ),
   user_browser = "electron"
 )
