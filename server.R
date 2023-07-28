@@ -877,7 +877,7 @@ shinyServer(function(input, output, session) {
     markerPlot <-
       ggplot(origExample) +
       geom_line(aes(x = `Time[ms]`, y = `CurrentIn[pA]`)) +
-      theme_chris_IV_analysis(22, 20) +
+      theme_chris_IV_analysis(10, 8) +
       theme(
         axis.line.x = element_line(colour = "black", linetype = "solid"),
         axis.line.y = element_line(colour = "black", linetype = "solid")
@@ -910,13 +910,14 @@ shinyServer(function(input, output, session) {
           {
             markerPlot
           },
-          height = 400,
-          width = 1200
+          height = 500,
+          width = 1200,
+          res = 300
         )
         list(
           src = img,
           width = 600,
-          height = 200
+          height = 250
         )
       },
       deleteFile = TRUE
