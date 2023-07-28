@@ -52,6 +52,7 @@ library(svglite)
 library(Cairo)
 library(gridExtra)
 library(ggpubr)
+library(showtext)
 library(ephys.WSI)
 
 options("guiToolkit"="tcltk")
@@ -91,6 +92,7 @@ supportPackages <- c(
   "Cairo",
   "gridExtra",
   "gWidgets2tcltk",
+  "showtext",
   "ggpubr")
 
 #####Global Variables#####
@@ -282,23 +284,19 @@ nameGenListAdj <-
     "Breezy"
   )
 
-windowsFonts("Arial" = windowsFont("Arial"))
-windowsFonts("Times New Roman" = windowsFont("Times New Roman"))
-windowsFonts("Helvetica" = windowsFont("Helvetica"))
-windowsFonts("Bahnschrift" = windowsFont("Bahnschrift"))
-windowsFonts("Comic Sans" = windowsFont("Comic Sans MS"))
-windowsFonts("Cambria Math" = windowsFont("Cambria Math"))
-windowsFonts("Courier New" = windowsFont("Courier New"))
-windowsFonts("Palatino Linotype" = windowsFont("Palatino Linotype"))
-windowsFonts("SimSun" = windowsFont("SimSun"))
-windowsFonts("Trebuchet" = windowsFont("Trebuchet MS"))
-windowsFonts("Yu Gothic" = windowsFont("Yu Gothic Regular"))
-windowsFonts("Webdings" = windowsFont("Webdings"))
-windowsFonts("Verdana" = windowsFont("Verdana"))
 
+showtext_auto()
+font_data <- font_files()
+Fonts <- c()
+# Loop through the data and add the "Regular" fonts
+for (i in seq_len(nrow(font_data))) {
+  if (font_data$face[i] == "Regular") {
+    font_add(font_data$family[i], regular = font_data$file[i])
+    Fonts <- c(Fonts, font_data$family[i])
+  }
+}
 
-
-
-Fonts <- c("Arial", "Bahnschrift", "Cambria Math", "Comic Sans", "Courier New",
-           "Helvetica", "Palatino Linotype", "SimSun","Times New Roman",
-           "Verdana", "Webdings", "Yu Gothic")
+if ("Arial" %in% Fonts) {
+  # Move "Arial" to the first element
+  Fonts <- c("Arial", Fonts[Fonts != "Arial"])
+}

@@ -52,6 +52,7 @@ create_app(
     "gridExtra",
     "gWidgets2tcltk",
     "ggpubr",
+    "showtext",
     "ephys.WSI"
   ),
   user_browser = "electron"
