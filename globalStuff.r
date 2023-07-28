@@ -287,6 +287,7 @@ nameGenListAdj <-
 
 showtext_auto()
 font_data <- font_files()
+showtext.opts(dpi = 300)
 Fonts <- c()
 # Loop through the data and add the "Regular" fonts
 for (i in seq_len(nrow(font_data))) {
