@@ -248,13 +248,13 @@ shinyServer(function(input, output, session) {
     if (input$inputAutoVoltageRamp) {
       changeIVVoltageRamp(
         settings_envir$voltage_unit,
-        input$rampUnit_Manual,
+        input$rampUnit_New,
         settings_envir$ramp_data,
-        c(input$rampMin_Manual, input$rampMax_Manual),
+        c(input$rampMin_New, input$rampMax_New),
         settings_envir$step,
-        input$rampStep_Manual,
+        input$rampStep_New,
         settings_envir$length_Vramp,
-        input$rampLength_Manual
+        input$rampLength_New
       )
     }
 
@@ -820,12 +820,50 @@ shinyServer(function(input, output, session) {
       updateNumericInput(session, "CurrentMarker_minmax", value = 249)
       updateNumericInput(session, "CurrentMarker_maxmin", value = 2251)
       updateNumericInput(session, "CurrentMarker_maxmax", value = 2450)
+
+      updateNumericInput(session, "rampMin_Original", value = -0.1)
+      updateNumericInput(session, "rampMax_Original", value = 0.1)
+      updateNumericInput(session, "rampLength_Original", value = 2001)
+      updateNumericInput(session, "rampStep_Original", value = 0.0001)
+      updateNumericInput(session, "rampUnit_Original", value = "V")
+
+      updateNumericInput(session, "rampMin_New", value = -100)
+      updateNumericInput(session, "rampMax_New", value = 100)
+      updateNumericInput(session, "rampLength_New", value = 2001)
+      updateNumericInput(session, "rampStep_Newl", value = 0.1)
+      updateNumericInput(session, "rampUnit_New", value = "mV")
+
+      changeVoltrageRampData(
+        input$rampUnit_Original,
+        c(input$rampMin_Original, input$rampMax_Original),
+        input$rampStep_Original,
+        input$rampLength_Original
+      )
     }
     if (input$markerSelection == "ultrafast") {
       updateNumericInput(session, "CurrentMarker_minmin", value = 30)
       updateNumericInput(session, "CurrentMarker_minmax", value = 34)
       updateNumericInput(session, "CurrentMarker_maxmin", value = 95)
       updateNumericInput(session, "CurrentMarker_maxmax", value = 98)
+
+      updateNumericInput(session, "rampMin_Original", value = -0.1)
+      updateNumericInput(session, "rampMax_Original", value = 0.1)
+      updateNumericInput(session, "rampLength_Original", value = 51)
+      updateNumericInput(session, "rampStep_Original", value = 0.004)
+      updateNumericInput(session, "rampUnit_Original", value = "V")
+
+      updateNumericInput(session, "rampMin_New", value = -100)
+      updateNumericInput(session, "rampMax_New", value = 100)
+      updateNumericInput(session, "rampLength_New", value = 51)
+      updateNumericInput(session, "rampStep_New", value = 4)
+      updateNumericInput(session, "rampUnit_New", value = "mV")
+
+      changeVoltrageRampData(
+        input$rampUnit_Original,
+        c(input$rampMin_Original, input$rampMax_Original),
+        input$rampStep_Original,
+        input$rampLength_Original
+      )
     }
   })
 
