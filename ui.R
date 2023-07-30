@@ -1946,8 +1946,8 @@ body <- dashboardBody(
                   selectInput(
                     "markerSelection",
                     label = NULL,
-                    choices = c("upramp100", "ultrafast"),
-                    selected = "upramp100"
+                    choices = c("Upramp", "ultrafastUpramp", "fastUpramp"),
+                    selected = "Upramp"
                   )
                 )
               ),
