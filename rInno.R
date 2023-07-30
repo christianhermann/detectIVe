@@ -5,10 +5,9 @@ require(RInno)
 create_app(
   app_name = "DetectIVe 2",
   publisher = "Christian Hermann",
-  license_file = "About/License.txt",
-  app_icon  = "www/detectIVe2.ico",
+  license_file = "About\\License.txt",
   compression = "bzip",
-  info_after = "About/Contact.txt",
+  info_after = "About\\Contact.txt",
   pkgs = c(
     "plotly",
     "shinyBS",
@@ -55,7 +54,13 @@ create_app(
     "showtext",
     "ephys.WSI"
   ),
-  user_browser = "electron"
-)
+  user_browser = "electron",
+  app_desc       = "Processing, evaluation and analysis of patch clamp data",
+                app_icon       = "www\\detectIVe2.ico",
+                prog_menu_icon = T,
+                desktop_icon   = T)
+
+#Change iss file after:
+#Under Icon, change commondesktop to userdesktop.
 
 compile_iss()
