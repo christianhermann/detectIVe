@@ -152,9 +152,16 @@ shinyServer(function(input, output, session) {
   })
 
   observeEvent(input$Import_Data, {
-    output$StatusDataImport <- renderText({
-      sapply(supportPackages, activatePackages)
-      quickTryCatchLogWithVar(importData, FALSE, "Data could not be importet: <br/> ")
+    isolate({
+      output$StatusDataImport <- renderText({
+        sapply(supportPackages, activatePackages)
+        quickTryCatchLogWithVar(importData, FALSE, "Data could not be importet: <br/> ")
+        if (isDataImported == TRUE) {
+          paste0("Data import succesfull!")
+        } else {
+          paste0("Data import not succesfull!")
+        }
+      })
     })
   })
 
@@ -313,8 +320,9 @@ shinyServer(function(input, output, session) {
   #### Boxplots
   observeEvent(input$Boxplot_colors, {
     colorSelected$Boxplot <<- input$Boxplot_colors
-  })
-
+    colorChoices$Boxplot <<- input$Boxplot_colors
+  },
+  ignoreInit=TRUE)
 
 
   observe({
@@ -330,12 +338,11 @@ shinyServer(function(input, output, session) {
                             value  = c(input$Boxplot_colorsText,col)))
   })
 
-
-
   ####
   #### Ratioplots
   observeEvent(input$Ratioplot_colors, {
     colorSelected$Ratioplot <<- input$Ratioplot_colors
+    colorChoices$Ratioplot <<- input$Ratioplot_colors
   })
   observe({
     col <- input$Ratioplot_colorPicker
@@ -353,6 +360,7 @@ shinyServer(function(input, output, session) {
   #### SingleTraces
   observeEvent(input$SingleTraces_colors, {
     colorSelected$SingleTraces <<- input$SingleTraces_colors
+    colorChoices$SingleTraces <<- input$SingleTraces_colors
   })
   observe({
     col <- input$SingleTraces_colorPicker
@@ -370,6 +378,7 @@ shinyServer(function(input, output, session) {
   #### MatTraces
   observeEvent(input$MatTraces_colors, {
     colorSelected$MatTraces <<- input$MatTraces_colors
+    colorChoices$MatTraces <<- input$MatTraces_colors
   })
   observe({
     col <- input$MatTraces_colorPicker
@@ -387,6 +396,7 @@ shinyServer(function(input, output, session) {
   #### MedianTraces
   observeEvent(input$MedianTraces_colors, {
     colorSelected$MedianTraces <<- input$MedianTraces_colors
+    colorChoices$MedianTraces <<- input$MedianTraces_colors
   })
   observe({
     col <- input$MedianTraces_colorPicker
@@ -404,6 +414,7 @@ shinyServer(function(input, output, session) {
   #### PPlot
   observeEvent(input$PPlot_colors, {
     colorSelected$PPlot <<- input$PPlot_colors
+    colorChoices$PPlot <<- input$PPlot_colors
   })
   observe({
     col <- input$PPlot_colorPicker
@@ -421,6 +432,7 @@ shinyServer(function(input, output, session) {
   #### StitchedPlot
   observeEvent(input$StitchedPlot_colors, {
     colorSelected$StitchedPlot <<- input$StitchedPlot_colors
+    colorChoices$StitchedPlot <<- input$StitchedPlot_colors
   })
   observe({
     col <- input$StitchedPlot_colorPicker
