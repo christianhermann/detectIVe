@@ -9,9 +9,12 @@ How can the detectIVe help you with?
 - Save plots as bitmaps, vector graphics or even .rdata for later use.
 
 
-How to setup the detecIVe?
-1. Make sure Microsoft R Open 4.02 is installed and selected as active R version. (Tools/Global Options/ R Version)
-2. Download the files in the repository
-3. Open the prepareDetectIVe.r file and run it to install checkpoint, vctr and shiny, create a checkpoint and then install all other needed packages. If asked if you want to restart RStudio press "No". 
-4  Once all packages are installed start the application by clicking on the "Run App" Button on the top right.
-5. Click on Settings then Packages and then checl the installed Packages. If one is If asked if you want to restart R Studio press no.
+Installation:
+1.Installation with setupfile:
+*   Use the rInno.R file to create an Installer.
+*	detectIVe2: setup_DetectIVe 2.exe
+*	Installation should be done either by each user in a private folder e.g. 
+(C:\Users\Chris\Documents\DetectIVe 2) or through an administrator. 
+2. Download and install R 4.2.3. 
+*	https://ftp.fau.de/cran/bin/windows/base/old/4.2.3/R-4.2.3-win.exe
+3. •	Launch the installed program. The first startup can be very slow.
