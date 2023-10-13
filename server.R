@@ -240,7 +240,7 @@ shinyServer(function(input, output, session) {
         input$CurrentMarker_maxmax
       )
     )
-    process_existing_summary()
+    process_existing_summary(rmBef = input$befFlag)
     if (input$inputMarkers == TRUE) {
       createInputMarkerPlot()
     }
@@ -2067,11 +2067,19 @@ shinyServer(function(input, output, session) {
       return()
     }
 
-    saveRDS(get_dim(plot_list[[plotType]]),
-      file = paste0(gfile(
-        type = "save", initial.filename = "Dimensions"
-      ), ".RDS")
-    )
+
+  file <- paste0(gfile(
+    type = "save", initial.filename = "Dimensions"
+  ), ".RDS")
+  tryCatch({
+  dims <- get_dim(plot_list[[plotType]])
+
+    saveRDS(dims, file = file)
+}, error = function(e)  easyShinyAlarm(
+  title = "",
+  text = e,
+  type = "Error"
+))
   }
 
   loadPlotDimensions <- function(plotType) {

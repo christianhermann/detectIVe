@@ -1930,7 +1930,7 @@ body <- dashboardBody(
       fluidRow(
         solidHeaderBoxes$LightBlue(
           title = "Current Export",
-          width = 10,
+          width = 12,
           fluidRow(
             column(
               6,
@@ -2024,11 +2024,21 @@ body <- dashboardBody(
             )
           )
         ),
-
         solidHeaderBoxes$LightBlue(
           title = "Fit parameters",
           width = 3,
           leftLabeldWidgets$numericInput("spar", "Spar: ", value = 0.8)
+        ),
+        solidHeaderBoxes$LightBlue(
+          title = "Outlier Detection",
+          width = 3,
+          prettySwitch(
+            "befFlag",
+            "Ignore Bef values for outlier detection",
+            value  = TRUE,
+            fill = TRUE,
+            status = "primary"
+        )
         )
       ),
       fluidRow(
