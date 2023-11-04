@@ -51,9 +51,9 @@ create_app(
     "gridExtra",
     "gWidgets2tcltk",
     "ggpubr",
-    "showtext",
-    "ephys.WSI"
+    "showtext"
   ),
+  remotes = "codevonchris/ephys.wsi",
   user_browser = "electron",
   app_desc       = "Processing, evaluation and analysis of patch clamp data",
                 app_icon       = "www\\detectIVe2.ico",
