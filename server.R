@@ -1612,7 +1612,7 @@ shinyServer(function(input, output, session) {
     if (!is.na(input[[paste0(plotType, "_YlimMin")]]) &&
       (!is.na(input[[paste0(plotType, "_YlimMax")]]))) {
       plot_list[[plotType]] <<- plot_list[[plotType]] +
-        ylim(input[[paste0(plotType, "_YlimMin")]], input[[paste0(plotType, "_YlimMax")]])
+        coord_cartesian(ylim = c(input[[paste0(plotType, "_YlimMin")]], input[[paste0(plotType, "_YlimMax")]]))
     }
   }
 

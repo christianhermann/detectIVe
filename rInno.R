@@ -1,6 +1,8 @@
 # Require Package (Special Rinno version with support for R 4 and higher https://github.com/bschneidr/RInno)
 require(RInno)
 
+Sys.setenv("TAR" = "internal")
+
 # Build an installer
 create_app(
   app_name = "DetectIVe 2",
@@ -53,7 +55,7 @@ create_app(
     "ggpubr",
     "showtext"
   ),
-  remotes = "codevonchris/ephys.wsi",
+  remotes = "chrisstiann94/ephys.wsi",
   user_browser = "electron",
   app_desc       = "Processing, evaluation and analysis of patch clamp data",
                 app_icon       = "www\\detectIVe2.ico",
