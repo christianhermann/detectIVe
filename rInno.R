@@ -64,5 +64,25 @@ create_app(
 #For package "estimability an older version needs to be downloaded and installed by hand. Atleast for r.4.2.3
 #Change iss file after:
 #Under Icon, change commondesktop to userdesktop.
+#Also change the following part to the uncommented one to make sure R 4.2.3 is used.:
+#success := false;
+#// for v := 0 to (RVersions.Count) do
+#//    begin
+#//      if RegKeyExists(HKLM, 'Software\R-Core\R\' + RVersions[v]) or RegKeyExists(HKCU, 'Software\R-Core\R\' + RVersions[v]) then
+#//      begin
+#//        success := true;
+#//        RRegKey := 'Software\R-Core\R\' + RVersions[v];
+#//        break;
+#//      end;
+#//   end;
+#  if RegKeyExists(HKLM, 'Software\R-Core\R\4.2.3') or RegKeyExists(HKCU, 'Software\R-Core\R\4.2.3') then
+#      begin
+#      success := true;
+#      RRegKey := 'Software\R-Core\R\4.2.3';
+#      end;
+#  Result := success;
+#end;
+
+
 
 compile_iss()
