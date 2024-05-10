@@ -1639,37 +1639,35 @@ shinyServer(function(input, output, session) {
   }
 
   markOutlierForPlots <- function(plotType) {
-    if (!isTruthy(input[[paste0(plotType, "_SummaryOutlier")]] != "None")) {
-      return(
-        list(
-          summary_list = data_storage_envir$summary_list,
-          IV_list = data_storage_envir$IV_list
-        )
-      )
-    }
 
 
-    summary_list <- data_storage_envir$summary_list
-    if (input[[paste0(plotType, "_SummaryOutlier")]] != "None") {
+    if (isTruthy(input[[paste0(plotType, "_SummaryOutlier")]] == "Outlier") &&
+        isTruthy(input[[paste0(plotType, "_IVOutlier")]] == "None"))
+    {
+      summary_list <- data_storage_envir$summary_list
+      IV_list <- deselect_SummaryOutlier_in_IV(summary_list,
+                                               data_storage_envir$IV_list,
+                                               data_storage_envir$peak_list)
       summary_list <-
-        map(
-          data_storage_envir$summary_list,
-          deselect_outlier,
-          input[[paste0(plotType, "_SummaryOutlier")]]
-        )
+        map(data_storage_envir$summary_list,
+            deselect_outlier,
+            input[[paste0(plotType, "_SummaryOutlier")]])
+      return(list(summary_list = summary_list, IV_list = IV_list))
     }
 
-    IV_list <- data_storage_envir$IV_list
+    if (isTruthy(input[[paste0(plotType, "_SummaryOutlier")]] == "None") &&
+        isTruthy(input[[paste0(plotType, "_IVOutlier")]] != "None"))
+    {
+      IV_list <- data_storage_envir$IV_list
+      summary_list <- data_storage_envir$summary_list
 
-    if (input[[paste0(plotType, "_IVOutlier")]] != "None") {
       show_modal_spinner() # show the modal window
+
       OutlierIV_list <-
-        detect_IV_outlier(
-          IV_list,
-          data_storage_envir$IV_names,
-          input[[paste0(plotType, "_IVOutlier")]],
-          100
-        )
+        detect_IV_outlier(IV_list, data_storage_envir$IV_names, input[[paste0(plotType, "_IVOutlier")]], 100)
+
+      IV_list <- OutlierIV_list$outlier_corrected_IV_list
+
       OutlierCombined_list <-
         get_complete_outlier(
           OutlierIV_list$outlier_tibble,
@@ -1678,20 +1676,57 @@ shinyServer(function(input, output, session) {
           data_storage_envir$summary_list,
           "Outlier"
         )
-      IV_list <- OutlierCombined_list$IV_list
-
-      IV_list <-
-        summary_list <-
-        map(
-          OutlierCombined_list$summary_list,
-          deselect_outlier,
-          "Outlier"
-        )
-      # remove it when done
       remove_modal_spinner()
+
+      return(list(
+        summary_list = OutlierCombined_list$summary_list,
+        IV_list = IV_list
+      ))
     }
 
-    return(list(summary_list, IV_list))
+    if (isTruthy(input[[paste0(plotType, "_SummaryOutlier")]] == "Outlier") &&
+        isTruthy(input[[paste0(plotType, "_IVOutlier")]] != "None"))
+    {
+      show_modal_spinner() # show the modal window
+
+      summary_list <- data_storage_envir$summary_list
+      IV_list <- deselect_SummaryOutlier_in_IV(summary_list,
+                                               data_storage_envir$IV_list,
+                                               data_storage_envir$peak_list)
+      IV_names <- deselect_SummaryOutlier_in_IV(summary_list,
+                                               data_storage_envir$IV_names,
+                                               data_storage_envir$peak_list)
+      summary_list <-
+        map(data_storage_envir$summary_list,
+            deselect_outlier,
+            input[[paste0(plotType, "_SummaryOutlier")]])
+
+      OutlierIV_list <-
+        detect_IV_outlier(IV_list, IV_names, input[[paste0(plotType, "_IVOutlier")]], 100)
+
+      IV_list <- OutlierIV_list$outlier_corrected_IV_list
+
+      OutlierCombined_list <-
+        get_complete_outlier(
+          OutlierIV_list$outlier_tibble,
+          IV_list,
+          IV_names,
+          summary_list,
+          "Outlier"
+        )
+      remove_modal_spinner()
+
+      return(list(
+        summary_list = OutlierCombined_list$summary_list,
+        IV_list = IV_list
+      ))
+    }
+    return(
+      list(
+        summary_list = data_storage_envir$summary_list,
+        IV_list = data_storage_envir$IV_list
+      )
+    )
   }
 
   selectTestForPlot <- function(testInput) {

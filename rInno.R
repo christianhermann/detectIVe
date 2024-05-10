@@ -5,7 +5,7 @@ Sys.setenv("TAR" = "internal")
 
 # Build an installer
 create_app(
-  app_name = "DetectIVe 2",
+  app_name = "DetectIVe2",
   publisher = "Christian Hermann",
   license_file = "About\\License.txt",
   compression = "bzip",
@@ -61,7 +61,7 @@ create_app(
                 app_icon       = "www\\detectIVe2.ico",
                 prog_menu_icon = T,
                 desktop_icon   = T)
-
+#For package "estimability an older version needs to be downloaded and installed by hand. Atleast for r.4.2.3
 #Change iss file after:
 #Under Icon, change commondesktop to userdesktop.
 
