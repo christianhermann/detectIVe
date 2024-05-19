@@ -1,3 +1,4 @@
+
 shinyServer(function(input, output, session) {
   #####
   ##### Reactives#####
@@ -36,7 +37,9 @@ shinyServer(function(input, output, session) {
   })
   ##### Change Workspace######
   observeEvent(input$ChangeWorkspace, {
-    try(setwd(choose.dir()))
+    wddir <- choose.dir()
+    if(!is.na(wddir)) setwd(wddir)
+
     output$Workspace <- renderText({
       getwd()
     })
@@ -47,7 +50,6 @@ shinyServer(function(input, output, session) {
   observeEvent(input$Check_Data, {
     sapply(supportPackages, activatePackages)
 
-    setwd(choose.dir())
     try({
       data_list <- import_excel_Data("summary_Data")
 
@@ -150,9 +152,16 @@ shinyServer(function(input, output, session) {
   })
 
   observeEvent(input$Import_Data, {
-    output$StatusDataImport <- renderText({
-      sapply(supportPackages, activatePackages)
-      quickTryCatchLogWithVar(importData, FALSE, "Data could not be importet: <br/> ")
+    isolate({
+      output$StatusDataImport <- renderText({
+        sapply(supportPackages, activatePackages)
+        quickTryCatchLogWithVar(importData, FALSE, "Data could not be importet: <br/> ")
+        if (isDataImported == TRUE) {
+          paste0("Data import succesfull!")
+        } else {
+          paste0("Data import not succesfull!")
+        }
+      })
     })
   })
 
@@ -231,7 +240,7 @@ shinyServer(function(input, output, session) {
         input$CurrentMarker_maxmax
       )
     )
-    process_existing_summary()
+    process_existing_summary(rmBef = input$befFlag)
     if (input$inputMarkers == TRUE) {
       createInputMarkerPlot()
     }
@@ -245,13 +254,13 @@ shinyServer(function(input, output, session) {
     if (input$inputAutoVoltageRamp) {
       changeIVVoltageRamp(
         settings_envir$voltage_unit,
-        input$rampUnit_Manual,
+        input$rampUnit_New,
         settings_envir$ramp_data,
-        c(input$rampMin_Manual, input$rampMax_Manual),
+        c(input$rampMin_New, input$rampMax_New),
         settings_envir$step,
-        input$rampStep_Manual,
+        input$rampStep_New,
         settings_envir$length_Vramp,
-        input$rampLength_Manual
+        input$rampLength_New
       )
     }
 
@@ -311,8 +320,9 @@ shinyServer(function(input, output, session) {
   #### Boxplots
   observeEvent(input$Boxplot_colors, {
     colorSelected$Boxplot <<- input$Boxplot_colors
-  })
-
+    colorChoices$Boxplot <<- input$Boxplot_colors
+  },
+  ignoreInit=TRUE)
 
 
   observe({
@@ -328,12 +338,11 @@ shinyServer(function(input, output, session) {
                             value  = c(input$Boxplot_colorsText,col)))
   })
 
-
-
   ####
   #### Ratioplots
   observeEvent(input$Ratioplot_colors, {
     colorSelected$Ratioplot <<- input$Ratioplot_colors
+    colorChoices$Ratioplot <<- input$Ratioplot_colors
   })
   observe({
     col <- input$Ratioplot_colorPicker
@@ -351,6 +360,7 @@ shinyServer(function(input, output, session) {
   #### SingleTraces
   observeEvent(input$SingleTraces_colors, {
     colorSelected$SingleTraces <<- input$SingleTraces_colors
+    colorChoices$SingleTraces <<- input$SingleTraces_colors
   })
   observe({
     col <- input$SingleTraces_colorPicker
@@ -368,6 +378,7 @@ shinyServer(function(input, output, session) {
   #### MatTraces
   observeEvent(input$MatTraces_colors, {
     colorSelected$MatTraces <<- input$MatTraces_colors
+    colorChoices$MatTraces <<- input$MatTraces_colors
   })
   observe({
     col <- input$MatTraces_colorPicker
@@ -385,6 +396,7 @@ shinyServer(function(input, output, session) {
   #### MedianTraces
   observeEvent(input$MedianTraces_colors, {
     colorSelected$MedianTraces <<- input$MedianTraces_colors
+    colorChoices$MedianTraces <<- input$MedianTraces_colors
   })
   observe({
     col <- input$MedianTraces_colorPicker
@@ -402,6 +414,7 @@ shinyServer(function(input, output, session) {
   #### PPlot
   observeEvent(input$PPlot_colors, {
     colorSelected$PPlot <<- input$PPlot_colors
+    colorChoices$PPlot <<- input$PPlot_colors
   })
   observe({
     col <- input$PPlot_colorPicker
@@ -419,6 +432,7 @@ shinyServer(function(input, output, session) {
   #### StitchedPlot
   observeEvent(input$StitchedPlot_colors, {
     colorSelected$StitchedPlot <<- input$StitchedPlot_colors
+    colorChoices$StitchedPlot <<- input$StitchedPlot_colors
   })
   observe({
     col <- input$StitchedPlot_colorPicker
@@ -812,17 +826,80 @@ shinyServer(function(input, output, session) {
 
   ##### Marker Selection#####
   observeEvent(input$markerSelection, {
-    if (input$markerSelection == "upramp100") {
+    if (input$markerSelection == "Upramp") {
       updateNumericInput(session, "CurrentMarker_minmin", value = 50)
       updateNumericInput(session, "CurrentMarker_minmax", value = 249)
       updateNumericInput(session, "CurrentMarker_maxmin", value = 2251)
       updateNumericInput(session, "CurrentMarker_maxmax", value = 2450)
+
+      updateNumericInput(session, "rampMin_Original", value = -0.1)
+      updateNumericInput(session, "rampMax_Original", value = 0.1)
+      updateNumericInput(session, "rampLength_Original", value = 2001)
+      updateNumericInput(session, "rampStep_Original", value = 0.0001)
+      updateNumericInput(session, "rampUnit_Original", value = "V")
+
+      updateNumericInput(session, "rampMin_New", value = -100)
+      updateNumericInput(session, "rampMax_New", value = 100)
+      updateNumericInput(session, "rampLength_New", value = 2001)
+      updateNumericInput(session, "rampStep_Newl", value = 0.1)
+      updateNumericInput(session, "rampUnit_New", value = "mV")
+
+      changeVoltrageRampData(
+        "V",
+        c(-0.1, 0.1),
+        0.0001,
+        2001
+      )
     }
-    if (input$markerSelection == "ultrafast") {
+    if (input$markerSelection == "ultrafastUpramp") {
       updateNumericInput(session, "CurrentMarker_minmin", value = 30)
       updateNumericInput(session, "CurrentMarker_minmax", value = 34)
       updateNumericInput(session, "CurrentMarker_maxmin", value = 95)
       updateNumericInput(session, "CurrentMarker_maxmax", value = 98)
+
+      updateNumericInput(session, "rampMin_Original", value = -0.1)
+      updateNumericInput(session, "rampMax_Original", value = 0.1)
+      updateNumericInput(session, "rampLength_Original", value = 51)
+      updateNumericInput(session, "rampStep_Original", value = 0.004)
+      updateNumericInput(session, "rampUnit_Original", value = "V")
+
+      updateNumericInput(session, "rampMin_New", value = -100)
+      updateNumericInput(session, "rampMax_New", value = 100)
+      updateNumericInput(session, "rampLength_New", value = 51)
+      updateNumericInput(session, "rampStep_New", value = 4)
+      updateNumericInput(session, "rampUnit_New", value = "mV")
+
+      changeVoltrageRampData(
+        "V",
+        c(-0.1, 0.1),
+        0.004,
+      51
+      )
+    }
+    if (input$markerSelection == "fastUpramp") {
+      updateNumericInput(session, "CurrentMarker_minmin", value = 150)
+      updateNumericInput(session, "CurrentMarker_minmax", value = 200)
+      updateNumericInput(session, "CurrentMarker_maxmin", value = 800)
+      updateNumericInput(session, "CurrentMarker_maxmax", value = 850)
+
+      updateNumericInput(session, "rampMin_Original", value = -0.1)
+      updateNumericInput(session, "rampMax_Original", value = 0.1)
+      updateNumericInput(session, "rampLength_Original", value = 501)
+      updateNumericInput(session, "rampStep_Original", value = 0.0004)
+      updateNumericInput(session, "rampUnit_Original", value = "V")
+
+      updateNumericInput(session, "rampMin_New", value = -100)
+      updateNumericInput(session, "rampMax_New", value = 100)
+      updateNumericInput(session, "rampLength_New", value = 501)
+      updateNumericInput(session, "rampStep_New", value = 0.4)
+      updateNumericInput(session, "rampUnit_New", value = "mV")
+
+      changeVoltrageRampData(
+        "V",
+        c(-0.1, 0.1),
+        0.0004,
+        501
+      )
     }
   })
 
@@ -836,7 +913,7 @@ shinyServer(function(input, output, session) {
     markerPlot <-
       ggplot(origExample) +
       geom_line(aes(x = `Time[ms]`, y = `CurrentIn[pA]`)) +
-      theme_chris_IV_analysis(22, 20) +
+      theme_chris_IV_analysis(10, 8) +
       theme(
         axis.line.x = element_line(colour = "black", linetype = "solid"),
         axis.line.y = element_line(colour = "black", linetype = "solid")
@@ -869,13 +946,14 @@ shinyServer(function(input, output, session) {
           {
             markerPlot
           },
-          height = 400,
-          width = 1200
+          height = 500,
+          width = 1200,
+          res = 300
         )
         list(
           src = img,
           width = 600,
-          height = 200
+          height = 250
         )
       },
       deleteFile = TRUE
@@ -1051,9 +1129,9 @@ shinyServer(function(input, output, session) {
           type = "error"
         )
       },
-      write.error.dump.file = TRUE,
+#      write.error.dump.file = TRUE,
       include.compact.call.stack = TRUE,
-      write.error.dump.folder = file.path(path, "Error Dumps"),
+#      write.error.dump.folder = file.path(path, "Error Dumps"),
       include.full.call.stack = FALSE
     )
   }
@@ -1534,7 +1612,7 @@ shinyServer(function(input, output, session) {
     if (!is.na(input[[paste0(plotType, "_YlimMin")]]) &&
       (!is.na(input[[paste0(plotType, "_YlimMax")]]))) {
       plot_list[[plotType]] <<- plot_list[[plotType]] +
-        ylim(input[[paste0(plotType, "_YlimMin")]], input[[paste0(plotType, "_YlimMax")]])
+        coord_cartesian(ylim = c(input[[paste0(plotType, "_YlimMin")]], input[[paste0(plotType, "_YlimMax")]]))
     }
   }
 
@@ -1561,37 +1639,35 @@ shinyServer(function(input, output, session) {
   }
 
   markOutlierForPlots <- function(plotType) {
-    if (!isTruthy(input[[paste0(plotType, "_SummaryOutlier")]] != "None")) {
-      return(
-        list(
-          summary_list = data_storage_envir$summary_list,
-          IV_list = data_storage_envir$IV_list
-        )
-      )
-    }
 
 
-    summary_list <- data_storage_envir$summary_list
-    if (input[[paste0(plotType, "_SummaryOutlier")]] != "None") {
+    if (isTruthy(input[[paste0(plotType, "_SummaryOutlier")]] == "Outlier") &&
+        isTruthy(input[[paste0(plotType, "_IVOutlier")]] == "None"))
+    {
+      summary_list <- data_storage_envir$summary_list
+      IV_list <- deselect_SummaryOutlier_in_IV(summary_list,
+                                               data_storage_envir$IV_list,
+                                               data_storage_envir$peak_list)
       summary_list <-
-        map(
-          data_storage_envir$summary_list,
-          deselect_outlier,
-          input[[paste0(plotType, "_SummaryOutlier")]]
-        )
+        map(data_storage_envir$summary_list,
+            deselect_outlier,
+            input[[paste0(plotType, "_SummaryOutlier")]])
+      return(list(summary_list = summary_list, IV_list = IV_list))
     }
 
-    IV_list <- data_storage_envir$IV_list
+    if (isTruthy(input[[paste0(plotType, "_SummaryOutlier")]] == "None") &&
+        isTruthy(input[[paste0(plotType, "_IVOutlier")]] != "None"))
+    {
+      IV_list <- data_storage_envir$IV_list
+      summary_list <- data_storage_envir$summary_list
 
-    if (input[[paste0(plotType, "_IVOutlier")]] != "None") {
       show_modal_spinner() # show the modal window
+
       OutlierIV_list <-
-        detect_IV_outlier(
-          IV_list,
-          data_storage_envir$IV_names,
-          input[[paste0(plotType, "_IVOutlier")]],
-          100
-        )
+        detect_IV_outlier(IV_list, data_storage_envir$IV_names, input[[paste0(plotType, "_IVOutlier")]], 100)
+
+      IV_list <- OutlierIV_list$outlier_corrected_IV_list
+
       OutlierCombined_list <-
         get_complete_outlier(
           OutlierIV_list$outlier_tibble,
@@ -1600,20 +1676,57 @@ shinyServer(function(input, output, session) {
           data_storage_envir$summary_list,
           "Outlier"
         )
-      IV_list <- OutlierCombined_list$IV_list
-
-      IV_list <-
-        summary_list <-
-        map(
-          OutlierCombined_list$summary_list,
-          deselect_outlier,
-          "Outlier"
-        )
-      # remove it when done
       remove_modal_spinner()
+
+      return(list(
+        summary_list = OutlierCombined_list$summary_list,
+        IV_list = IV_list
+      ))
     }
 
-    return(list(summary_list, IV_list))
+    if (isTruthy(input[[paste0(plotType, "_SummaryOutlier")]] == "Outlier") &&
+        isTruthy(input[[paste0(plotType, "_IVOutlier")]] != "None"))
+    {
+      show_modal_spinner() # show the modal window
+
+      summary_list <- data_storage_envir$summary_list
+      IV_list <- deselect_SummaryOutlier_in_IV(summary_list,
+                                               data_storage_envir$IV_list,
+                                               data_storage_envir$peak_list)
+      IV_names <- deselect_SummaryOutlier_in_IV(summary_list,
+                                               data_storage_envir$IV_names,
+                                               data_storage_envir$peak_list)
+      summary_list <-
+        map(data_storage_envir$summary_list,
+            deselect_outlier,
+            input[[paste0(plotType, "_SummaryOutlier")]])
+
+      OutlierIV_list <-
+        detect_IV_outlier(IV_list, IV_names, input[[paste0(plotType, "_IVOutlier")]], 100)
+
+      IV_list <- OutlierIV_list$outlier_corrected_IV_list
+
+      OutlierCombined_list <-
+        get_complete_outlier(
+          OutlierIV_list$outlier_tibble,
+          IV_list,
+          IV_names,
+          summary_list,
+          "Outlier"
+        )
+      remove_modal_spinner()
+
+      return(list(
+        summary_list = OutlierCombined_list$summary_list,
+        IV_list = IV_list
+      ))
+    }
+    return(
+      list(
+        summary_list = data_storage_envir$summary_list,
+        IV_list = data_storage_envir$IV_list
+      )
+    )
   }
 
   selectTestForPlot <- function(testInput) {
@@ -1989,11 +2102,19 @@ shinyServer(function(input, output, session) {
       return()
     }
 
-    saveRDS(get_dim(plot_list[[plotType]]),
-      file = paste0(gfile(
-        type = "save", initial.filename = "Dimensions"
-      ), ".RDS")
-    )
+
+  file <- paste0(gfile(
+    type = "save", initial.filename = "Dimensions"
+  ), ".RDS")
+  tryCatch({
+  dims <- get_dim(plot_list[[plotType]])
+
+    saveRDS(dims, file = file)
+}, error = function(e)  easyShinyAlarm(
+  title = "",
+  text = e,
+  type = "Error"
+))
   }
 
   loadPlotDimensions <- function(plotType) {
@@ -2109,4 +2230,11 @@ shinyServer(function(input, output, session) {
     updateBoxSidebar("ylimSidebar_StitchedPlot")
   })
   #####
+
+  if (!interactive()) {
+    session$onSessionEnded(function() {
+      stopApp()
+      q("no")
+    })
+  }
 })

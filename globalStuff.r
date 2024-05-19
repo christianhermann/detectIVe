@@ -1,69 +1,63 @@
 rm(list = ls())
-options(repos = c(CRAN = "https://mran.revolutionanalytics.com/snapshot/2022-04-07"),
-        shiny.launch.browser = .rs.invokeShinyWindowExternal,
+options(
         rlib_downstream_check = FALSE,
         lib="glyphicon")
 
 if("ephys.WSI" %in%  .packages()) detach("package:ephys.WSI", unload = TRUE)
 
-library(checkpoint)
-####Packages on NAS (Slow!)####
-#checkpoint("2022-04-07", scanForPackages = F,
-#           checkpoint_location = "U:/Installationsprogramme/R/detecIVe2")
-
-####Packages on local drive (fast)####
-checkpoint("2022-04-07", scanForPackages = F,
-           checkpoint_location = "C:/R_Checkpoint")
 
 
+####Load the most needed packages to run####
 
+library(plotly)
+library(shinyBS)
+library(shinyalert)
+library(shinybusy)
+library(shinycustomloader)
+library(shinyWidgets)
+library(shinydashboard)
+library(shinydashboardPlus)
+library(shinyjs)
+library(shiny)
+library(rstudioapi)
+library(tryCatchLog)
+library(esquisse)
+library(scales)
+library(gtools)
+library(ephys.WSI)
+library(dplyr)
+library(tidyverse)
+library(stringi)
+library(vroom)
+library(openxlsx)
+# library(gWidgets2)
+library(gWidgets2tcltk)
+library(matrixStats)
+library(checkmate)
+library(outliers)
+library(purrrlyr)
+library(ggsci)
+library(ggthemes)
+library(factoextra)
+library(ggplot2)
+library(patchwork)
+library(cluster)
+library(factoextra)
+library(ggalt)
+library(gtools)
+library(latex2exp)
+library(cowplot)
+library(scales)
+library(svglite)
+library(Cairo)
+library(gridExtra)
+library(ggpubr)
+library(showtext)
+library(ephys.WSI)
 
-####Install the most needed packages to run####
+options("guiToolkit"="tcltk")
+guiToolkit("tcltk")
 
-if(!require(plotly)) install.packages("plotly")
-if(!require(shinyBS)) install.packages("shinyBS")
-if(!require(shinyalert)) install.packages("shinyalert")
-if(!require(shinybusy)) install.packages("shinybusy")
-if(!require(shinycustomloader)) install.packages("shinycustomloader")
-if(!require(shinyWidgets)) install.packages("shinyWidgets")
-if(!require(shinydashboard)) install.packages("shinydashboard")
-if(!require(shinydashboardPlus)) install.packages("shinydashboardPlus")
-if(!require(shinyjs)) install.packages("shinyjs")
-if(!require(shiny)) install.packages("shiny")
-if(!require(rstudioapi)) install.packages("rstudioapi")
-if(!require(tryCatchLog)) install.packages("tryCatchLog")
-if(!require(esquisse)) install.packages("esquisse")
-if(!require(scales)) install.packages("scales")
-if(!require(gtools)) install.packages("gtools")
-
-####Newest release####
-VersionEphysWSI = '2.1.8'
-####Newest release####
-path <- rstudioapi::getSourceEditorContext()$path
-path <- paste(strsplit(path,"/")[[1]][-length(strsplit(path,"/")[[1]])], collapse = "/")
-
-if(!require(ephys.WSI)) install.packages(
-  paste0(path,"/","ephys.WSI_",VersionEphysWSI,".zip"),
-  repos = NULL,
-  type = "win.binary"
-)
-
-####Install the most needed packages to run####
-
-
-####Autoupdate Package####
-if (packageVersion("ephys.WSI") != VersionEphysWSI){
-  if("ephys.WSI" %in% (.packages()))
-    detach("package:ephys.WSI", unload = TRUE)
-  remove.packages("ephys.WSI", lib = "~/R/win-library/3.6")
-  install.packages(
-    paste0(path,"/","ephys.WSI_",VersionEphysWSI,".zip"),
-    repos = NULL,
-    type = "win.binary"
-  )
-}
-
-####Autoupdate Package####
 ###Envirs###
 data_storage_envir <- data_storage_envir
 data_envir <- data_envir
@@ -98,12 +92,13 @@ supportPackages <- c(
   "Cairo",
   "gridExtra",
   "gWidgets2tcltk",
+  "showtext",
   "ggpubr")
 
 #####Global Variables#####
 isDataImported <- FALSE
 colorPalette <- c("#000000", "#0072B2", "#009E73",
-                  "#D55E00", "#56B4E9", #F0E442",
+                  "#D55E00", "#56B4E9", "#F0E442",
                   "#CC79A7", "#999999", "#E69F00")
 colorChoices <- list(Boxplot = colorPalette,
                      Ratioplot = colorPalette,
@@ -289,23 +284,20 @@ nameGenListAdj <-
     "Breezy"
   )
 
-windowsFonts("Arial" = windowsFont("Arial"))
-windowsFonts("Times New Roman" = windowsFont("Times New Roman"))
-windowsFonts("Helvetica" = windowsFont("Helvetica"))
-windowsFonts("Bahnschrift" = windowsFont("Bahnschrift"))
-windowsFonts("Comic Sans" = windowsFont("Comic Sans MS"))
-windowsFonts("Cambria Math" = windowsFont("Cambria Math"))
-windowsFonts("Courier New" = windowsFont("Courier New"))
-windowsFonts("Palatino Linotype" = windowsFont("Palatino Linotype"))
-windowsFonts("SimSun" = windowsFont("SimSun"))
-windowsFonts("Trebuchet" = windowsFont("Trebuchet MS"))
-windowsFonts("Yu Gothic" = windowsFont("Yu Gothic Regular"))
-windowsFonts("Webdings" = windowsFont("Webdings"))
-windowsFonts("Verdana" = windowsFont("Verdana"))
 
+showtext_auto()
+font_data <- font_files()
+showtext.opts(dpi = 300)
+Fonts <- c()
+# Loop through the data and add the "Regular" fonts
+for (i in seq_len(nrow(font_data))) {
+  if (font_data$face[i] == "Regular") {
+    font_add(font_data$family[i], regular = font_data$file[i])
+    Fonts <- c(Fonts, font_data$family[i])
+  }
+}
 
-
-
-Fonts <- c("Arial", "Bahnschrift", "Cambria Math", "Comic Sans", "Courier New",
-           "Helvetica", "Palatino Linotype", "SimSun","Times New Roman",
-           "Verdana", "Webdings", "Yu Gothic")
+if ("Arial" %in% Fonts) {
+  # Move "Arial" to the first element
+  Fonts <- c("Arial", Fonts[Fonts != "Arial"])
+}
