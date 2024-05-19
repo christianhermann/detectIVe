@@ -1,5 +1,5 @@
   #define MyAppName "DetectIVe2"
-#define MyAppVersion "1.0.0"
+#define MyAppVersion "0.0.0"
 #define MyAppExeName "DetectIVe2.bat"
 #define RVersion "4.2.3"
 #define IncludeR false
@@ -13,7 +13,7 @@
 
 [Setup]
 AppName = {#MyAppName}
-AppId = {{5ZIPMB07-AEVC-KUN5-VCF6-0QJ4AH5Q4FBP}
+AppId = {{697P7VBM-ICS9-RBS4-1WMM-J9SA1OUS6CZ8}
 DefaultDirName = {userdocs}\{#MyAppName}
 DefaultGroupName = {#MyAppName}
 OutputDir = RInno_installer
@@ -62,7 +62,6 @@ Source: "{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
 Source: "default.ico"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "detectIVe 2.0.Rproj"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "DetectIVe2.bat"; DestDir: "{app}"; Flags: ignoreversion;
-Source: "ephys.WSI_2.2.4.zip"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "globalStuff.r"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "Installation Guide.txt"; DestDir: "{app}"; Flags: ignoreversion;
 Source: "LICENSE"; DestDir: "{app}"; Flags: ignoreversion;
@@ -124,7 +123,7 @@ Source: "bin/e1071_1.7-14.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/ellipse_0.5.0.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/ellipsis_0.3.2.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/emmeans_1.10.1.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
-Source: "bin/ephys.WSI_2.2.4.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
+Source: "bin/ephys.WSI_2.2.5.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/esquisse_1.2.0.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/estimability_1.4.1.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/evaluate_0.23.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
@@ -439,16 +438,21 @@ var
     v: Integer;
     success: boolean;
 begin
-  success := false;
-  for v := 0 to (RVersions.Count - 1) do
-    begin
-      if RegKeyExists(HKLM, 'Software\R-Core\R\' + RVersions[v]) or RegKeyExists(HKCU, 'Software\R-Core\R\' + RVersions[v]) then
+ success := false;
+// for v := 0 to (RVersions.Count) do
+//    begin
+//      if RegKeyExists(HKLM, 'Software\R-Core\R\' + RVersions[v]) or RegKeyExists(HKCU, 'Software\R-Core\R\' + RVersions[v]) then
+//      begin
+//        success := true;
+//        RRegKey := 'Software\R-Core\R\' + RVersions[v];
+//        break;
+//      end;
+//   end;
+  if RegKeyExists(HKLM, 'Software\R-Core\R\4.2.3') or RegKeyExists(HKCU, 'Software\R-Core\R\4.2.3') then
       begin
-        success := true;
-        RRegKey := 'Software\R-Core\R\' + RVersions[v];
-        break;
+      success := true;
+      RRegKey := 'Software\R-Core\R\4.2.3';
       end;
-    end;
   Result := success;
 end;
 
