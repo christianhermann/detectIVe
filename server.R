@@ -694,11 +694,11 @@ shinyServer(function(input, output, session) {
   })
 
   observeEvent(input$Boxplot_Modal_save_Plot, {
-    quickSavePlot(plot_list$Boxplot, "Boxplot")
+    quickSavePlot(plot_list$Boxplot, "Boxplot_")
   })
 
   observeEvent(input$Boxplot_Modal_save_Plot_R, {
-    savePlotasR(plot_list$Boxplot, "Boxplot")
+    savePlotasR(plot_list$Boxplot, "Boxplot_")
   })
 
   observeEvent(input$Ratioplot_Save_plot, {
