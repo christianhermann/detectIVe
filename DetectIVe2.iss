@@ -13,7 +13,7 @@
 
 [Setup]
 AppName = {#MyAppName}
-AppId = {{697P7VBM-ICS9-RBS4-1WMM-J9SA1OUS6CZ8}
+AppId = {{KU8HZJ2A-2RI3-XWRL-S72Q-VF5O2F8XQGI5}
 DefaultDirName = {userdocs}\{#MyAppName}
 DefaultGroupName = {#MyAppName}
 OutputDir = RInno_installer
@@ -116,6 +116,7 @@ Source: "bin/dendextend_1.17.1.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/desc_1.4.3.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/diffobj_0.3.5.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/digest_0.6.35.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
+Source: "bin/downlit_0.4.3.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/dplyr_1.1.4.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/DT_0.33.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
 Source: "bin/dtplyr_1.3.1.zip"; DestDir: "{app}\bin"; Flags: ignoreversion;
@@ -438,7 +439,7 @@ var
     v: Integer;
     success: boolean;
 begin
- success := false;
+  success := false;
 // for v := 0 to (RVersions.Count) do
 //    begin
 //      if RegKeyExists(HKLM, 'Software\R-Core\R\' + RVersions[v]) or RegKeyExists(HKCU, 'Software\R-Core\R\' + RVersions[v]) then
@@ -448,14 +449,13 @@ begin
 //        break;
 //      end;
 //   end;
-  if RegKeyExists(HKLM, 'Software\R-Core\R\4.2.3') or RegKeyExists(HKCU, 'Software\R-Core\R\4.2.3') then
-      begin
-      success := true;
-      RRegKey := 'Software\R-Core\R\4.2.3';
-      end;
-  Result := success;
+ if RegKeyExists(HKLM, 'Software\R-Core\R\4.2.3') or RegKeyExists(HKCU, 'Software\R-Core\R\4.2.3') then
+     begin
+     success := true;
+     RRegKey := 'Software\R-Core\R\4.2.3';
+     end;
+ Result := success;
 end;
-
 // If R is not detected, it is needed
 function RNeeded(): boolean;
 begin
