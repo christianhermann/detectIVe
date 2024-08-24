@@ -1,20 +1,31 @@
-How can the detectIVe help you with?
-
-- Fast and easy import of HEKA Patchmaster .asc data.
-- Cleanup of imported .asc data.
-- Calculation of various measurement parameters such as the current density.
-- Easy way to save and store data for later use as a single .rdata file.
-- Create a large set of different beautifull plots, such as current density boxplots or current density - voltage relation plots using ggplot2 and an easy to use GUI.
-- Calculate and display key parameters and statistics for those plots.
-- Save plots as bitmaps, vector graphics or even .rdata for later use.
+<img src="https://github.com/christianhermann/detectIVe/blob/RinnoMigration/www/detectIVe2.png"  height="200" />
 
 
-Installation:
-1.Installation with setupfile:
-*   Use the rInno.R file to create an Installer.
-*	detectIVe2: setup_DetectIVe 2.exe
-*	Installation should be done either by each user in a private folder e.g. 
-(C:\Users\Chris\Documents\DetectIVe 2) or through an administrator. 
-2. Download and install R 4.2.3. 
-*	https://ftp.fau.de/cran/bin/windows/base/old/4.2.3/R-4.2.3-win.exe
-3. •	Launch the installed program. The first startup can be very slow.
+# Detective 2
+
+Detective 2 is a R-based program designed for the analysis of whole-cell patch-clamp measurements, recored thorugh a HEKA EPC 10 USB Patch Clamp Amplifier and the Patchmaster software. 
+
+
+## Features
+
+- Time saving automated data import from .asc files
+- Easy creation and saving of various highly customizable plots
+- Automated statistical analysis
+- Data export in .xlsx and .rdata files
+- Easy-to-use gui
+
+## Installation
+
+Install Detective 2 with setup_DetectIVe2.exe from the releases or build your own installer using rInno.r
+
+
+## Screenshots
+
+![App Screenshot](https://private-user-images.githubusercontent.com/89738195/335862880-cad466c4-d6a2-4638-a495-dd9bd1f21126.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjQ1MTg5MjYsIm5iZiI6MTcyNDUxODYyNiwicGF0aCI6Ii84OTczODE5NS8zMzU4NjI4ODAtY2FkNDY2YzQtZDZhMi00NjM4LWE0OTUtZGQ5YmQxZjIxMTI2LnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA4MjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwODI0VDE2NTcwNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTUwMWRkNGQ0NGJhNzBlNjE0ZjYyZTYyYzlhNDkzZjlkOWI5YjkwMzBjMjliMzlkOGVhNWViMTIyMWUwNWFkZjMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.XOd8NuzOSoxxr8Vh19AdA1BNZE8vvG1DTvkhQQ53lHI)
+
+![App Screenshot](https://private-user-images.githubusercontent.com/89738195/335136799-b5cc7e84-7890-4ec9-a872-b57bcd102b2c.png?jwt=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3MjQ1MTg5MjYsIm5iZiI6MTcyNDUxODYyNiwicGF0aCI6Ii84OTczODE5NS8zMzUxMzY3OTktYjVjYzdlODQtNzg5MC00ZWM5LWE4NzItYjU3YmNkMTAyYjJjLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNDA4MjQlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjQwODI0VDE2NTcwNlomWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPWMwZDkxM2IzZGU1NDRjNDdkNzI3NTJiYTQyYjE4ZDYxYWI0MjMzMzMxZTBmNTYyZmQ0ZTZjZGQ1ZWJjYTkxMjMmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0JmFjdG9yX2lkPTAma2V5X2lkPTAmcmVwb19pZD0wIn0.dU0V4Yz10jA2Q34fjR3N8Cmsf0cMZve7sArG860QKbE)
+
+## License
+
+[MIT](https://choosealicense.com/licenses/mit/)
+
