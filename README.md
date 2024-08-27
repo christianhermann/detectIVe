@@ -3,7 +3,7 @@
 
 # Detective 2
 
-Detective 2 is a R-based program designed for the analysis of whole-cell patch-clamp measurements, recored thorugh a HEKA EPC 10 USB Patch Clamp Amplifier and the Patchmaster software. 
+Detective 2 is a R-based program designed for the analysis of whole-cell patch-clamp measurements, recored thorugh a HEKA EPC 10 USB Patch Clamp Amplifier and the Patchmaster software. It includes min/max, I/V relations and normalized slope conductance analysis.
 
 
 ## Features
