@@ -27,6 +27,9 @@ Install Detective 2 with setup_DetectIVe2.exe from the releases or build your ow
 
 ![App Screenshot](https://github.com/christianhermann/detectIVe/blob/RinnoMigration/screenshots/Single%20Traces.PNG)
 
+
+More Screenshot and infos can be found in the readme file.
+
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
