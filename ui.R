@@ -1704,11 +1704,42 @@ body <- dashboardBody(
                     column(
                       3,
                       div(style = "margin-top: -10px; margin-bottom: 15px; font-size:15px; text-align:center", HTML("<strong> Other </strong>")),
+                      actionButton("showSidebar_PPlot", "Custom Y-Axis limits"),
                       radioTextSDMADShadow$PPlot(),
                       checkboxSeperateLegend$PPlot(),
                       checkboxSetDimensions$PPlot()
                     )
-                  )
+                  ),
+                  sidebar = boxSidebar(
+                    id = "ylimSidebar_PPlot",
+                    width = 55,
+                    fluidPage(
+                      fluidRow(
+                        column(
+                          3,
+                          HTML("<b> Inward </b>")),
+                        column(
+                          4,
+                          numericInput("PPlot_YlimMin1", NULL, "", -100000, 100000, 0.1)
+                        ), column(
+                          4,
+                          numericInput("PPlot_YlimMax1", NULL, "", -100000, 100000, 0.1)
+                        )),
+                      fluidRow(
+                        column(
+                          3,
+                          HTML("<b> Outward </b>")
+                        ),
+                        column(
+                          4,
+                          numericInput("PPlot_YlimMin2", NULL, "", -100000, 100000, 0.1)
+                        ), column(
+                          4,
+                          numericInput("PPlot_YlimMax2", NULL, "", -100000, 100000, 0.1)
+                        )),
+                      actionButton("hideSidebar_PPlot", "Hide")
+                    )
+                    )
                 )
               )
             ),

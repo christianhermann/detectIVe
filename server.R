@@ -2229,6 +2229,13 @@ shinyServer(function(input, output, session) {
   observeEvent(input$hideSidebar_StitchedPlot, {
     updateBoxSidebar("ylimSidebar_StitchedPlot")
   })
+
+  observeEvent(input$showSidebar_PPlot, {
+    updateBoxSidebar("ylimSidebar_PPlot")
+  })
+  observeEvent(input$hideSidebar_PPlot, {
+    updateBoxSidebar("ylimSidebar_PPlot")
+  })
   #####
 
   if (!interactive()) {
