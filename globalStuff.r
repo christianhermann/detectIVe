@@ -53,6 +53,7 @@ library(Cairo)
 library(gridExtra)
 library(ggpubr)
 library(showtext)
+library(signs)
 library(ephys.WSI)
 
 options("guiToolkit"="tcltk")

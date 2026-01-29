@@ -53,7 +53,8 @@ create_app(
     "gridExtra",
     "gWidgets2tcltk",
     "ggpubr",
-    "showtext"
+    "showtext",
+    "signs"
   ),
   remotes = "chrisstiann94/ephys.wsi",
   user_browser = "electron",
@@ -61,6 +62,7 @@ create_app(
                 app_icon       = "www\\detectIVe2.ico",
                 prog_menu_icon = T,
                 desktop_icon   = T)
+
 #For package "estimability an older version needs to be downloaded and installed by hand. Atleast for r.4.2.3
 #Change iss file after:
 #Under Icon, change commondesktop to userdesktop.

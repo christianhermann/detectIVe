@@ -1522,7 +1522,9 @@ shinyServer(function(input, output, session) {
             ),
             measurement_name = input$Names_PPlot,
             splitted = input$split_plot_PPlot,
-            overrideYlim = c(input$PPlot_YlimMin, input$PPlot_YlimMax),
+            overrideYlim = list(
+              c(input$PPlot_YlimMin1, input$PPlot_YlimMax1),
+              c(input$PPlot_YlimMin2, input$PPlot_YlimMax2)),
             used_colors = used_colors,
             SD_MAD = input$Deviations_PPlot,
             SD_MAD_shadow_direction = unlist(strsplit(input$SD_MAD_Shadow_PPlot, ",")),
@@ -2013,16 +2015,16 @@ shinyServer(function(input, output, session) {
   yAxisLabelChoices <- function(name) {
     return(switch(name,
       "Boxplot" = {
-        add_phantom_supersubscript("Curr. dens. (pA pF$^{-1}$)")
+        add_phantom_supersubscript("Curr. dens.$ $(pA pF$^{-1}$)")
       },
       "Ratio" = {
         add_phantom_supersubscript("Curr. dens.$_{max}$ / curr. dens.$_{min}$")
       },
       "IV" = {
-        add_phantom_supersubscript("Curr. dens. (pA pF$^{-1}$)")
+        add_phantom_supersubscript("Curr. dens.$ $(pA pF$^{-1}$)")
       },
       "Normalized IV" = {
-        add_phantom_supersubscript("Curr. dens.$_{norm}$ (%)")
+        add_phantom_supersubscript("Curr. dens.$\\,$$_{norm}$ (%)")
       },
       "Slope" = {
         add_phantom_supersubscript("Norm. G$_{slope}")
@@ -2033,10 +2035,10 @@ shinyServer(function(input, output, session) {
             add_phantom_supersubscript("Curr. dens. (pA pF$^{-1}$)")
           },
           "normalized_CurrentDensity" = {
-            add_phantom_supersubscript("Curr. dens.$_{norm}$ (%)")
+            add_phantom_supersubscript("Curr. dens.$\\,$$_{norm}$ (%)")
           },
           "fitted_normalized_CurrentDensity" = {
-            add_phantom_supersubscript("Curr. dens.$_{norm}$ (%)")
+            add_phantom_supersubscript("Curr. dens.$\\,$$_{norm}$ (%)")
           },
           "normalized_slopeConductance" = {
             add_phantom_supersubscript("Norm. G$_{slope}")
@@ -2050,10 +2052,10 @@ shinyServer(function(input, output, session) {
             add_phantom_supersubscript("Curr. dens. (pA pF$^{-1}$)")
           },
           "normalized_CurrentDensity" = {
-            add_phantom_supersubscript("Curr. dens.$_{norm}$ (%)")
+            add_phantom_supersubscript("Curr. dens.$\\,$$_{norm}$ (%)")
           },
           "fitted_normalized_CurrentDensity" = {
-            add_phantom_supersubscript("Curr. dens.$_{norm}$ (%)")
+            add_phantom_supersubscript("Curr. dens.$\\,$$_{norm}$ (%)")
           },
           "normalized_slopeConductance" = {
             add_phantom_supersubscript("Norm. G$_{slope}")
@@ -2069,10 +2071,10 @@ shinyServer(function(input, output, session) {
               add_phantom_supersubscript("Curr. dens. (pA pF$^{-1}$)")
             },
             "normalized_CurrentDensity" = {
-              add_phantom_supersubscript("Curr. dens.$_{norm}$ (%)")
+              add_phantom_supersubscript("Curr. dens.$\\,$$_{norm}$ (%)")
             },
             "fitted_normalized_CurrentDensity" = {
-              add_phantom_supersubscript("Curr. dens.$_{norm}$ (%)")
+              add_phantom_supersubscript("Curr. dens.$\\,$$_{norm}$ (%)")
             },
             "normalized_slopeConductance" = {
               add_phantom_supersubscript("Norm. G$_{slope}")
