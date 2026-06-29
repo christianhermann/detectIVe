@@ -60,23 +60,7 @@ detectIVe/
 ├── screenshots/              # Application interface screenshots
 └── Installation Guide.txt    # Quick installation instructions
 ```
-## Project Structure
 
-```
-detectIVe/
-├── ui.R                      # User interface definition
-├── server.R                  # Server logic and data processing
-├── globalStuff.r             # Global variables and shared functions
-├── prepareDetectIVe.r        # Dependency installation script
-├── rInno.R                   # Standalone installer builder
-├── DetectIVe2.iss            # Inno Setup configuration
-├── detectIVe_manual.pdf      # Comprehensive user manual
-├── detectIVe 2.0.Rproj       # RStudio project file
-├── About/                    # Application information and credits
-├── www/                      # Web assets (CSS, images, JavaScript)
-├── screenshots/              # Application interface screenshots
-└── Installation Guide.txt    # Quick installation instructions
-```
 
 ## File Descriptions
 
